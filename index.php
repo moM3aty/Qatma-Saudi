@@ -1,7 +1,14 @@
 <?php
 require 'config.php';
+
+// جلب المنتجات
 $stmt = $pdo->query("SELECT * FROM products ORDER BY id ASC");
 $products = $stmt->fetchAll();
+
+// جلب الفيديوهات
+$stmt = $pdo->query("SELECT * FROM videos ORDER BY sort_order ASC, id ASC");
+$videos = $stmt->fetchAll();
+$videosCount = count($videos);
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -135,22 +142,19 @@ $products = $stmt->fetchAll();
             <span class="badge">عالمنا في لقطات</span>
             <h2 class="title-main">استمتع بـ <span>لحظات القرمشة</span></h2>
         </div>
+        <?php if (!empty($videos)): ?>
         <div class="cinema-container reveal-up">
             <div class="video-frame">
                 <div class="frame-top">
                     <div class="dots"><span></span><span></span><span></span></div>
-                    <div class="vid-count">فيديو <span id="currentNum">1</span> / 3</div>
+                    <div class="vid-count">فيديو <span id="currentNum">1</span> / <?php echo $videosCount; ?></div>
                 </div>
                 <div class="video-wrapper">
-                    <video class="showcase-video active" id="vid1" muted playsinline>
-                        <source src="videos/vid1.mp4" type="video/mp4">
+                    <?php foreach ($videos as $index => $v): ?>
+                    <video class="showcase-video <?php echo $index === 0 ? 'active' : ''; ?>" id="vid<?php echo $index + 1; ?>" muted playsinline>
+                        <source src="<?php echo htmlspecialchars($v['video']); ?>" type="video/mp4">
                     </video>
-                    <video class="showcase-video" id="vid2" muted playsinline>
-                        <source src="videos/vid2.mp4" type="video/mp4">
-                    </video>
-                    <video class="showcase-video" id="vid3" muted playsinline>
-                        <source src="videos/vid3.mp4" type="video/mp4">
-                    </video>
+                    <?php endforeach; ?>
                     <div class="video-controls-overlay">
                         <div class="play-trigger" id="masterPlay">
                             <i class="fas fa-play"></i>
@@ -167,20 +171,20 @@ $products = $stmt->fetchAll();
                 </div>
             </div>
             <div class="video-captions">
-                <div class="caption active" id="cap1">
-                    <h3>نكهة تشعل الحواس</h3>
-                    <p>تجربة قطميتوس الجديدة.. حيث تلتقي القرمشة بالفلفل المشتعل.</p>
+                <?php foreach ($videos as $index => $v): ?>
+                <div class="caption <?php echo $index === 0 ? 'active' : ''; ?>" id="cap<?php echo $index + 1; ?>">
+                    <h3><?php echo htmlspecialchars($v['title']); ?></h3>
+                    <p><?php echo htmlspecialchars($v['description']); ?></p>
                 </div>
-                <div class="caption" id="cap2">
-                    <h3>أوقات السعادة مع قطمة</h3>
-                    <p>فشار قطمة الطبيعي.. الرفيق المثالي لجمعات العائلة والأصدقاء.</p>
-                </div>
-                <div class="caption" id="cap3">
-                    <h3>إيفانو.. فخامة الويفر</h3>
-                    <p>دلل نفسك مع ويفر إيفانو المحشو بأغنى أنواع الكريمة.</p>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
+        <?php else: ?>
+        <div style="text-align:center; color:#fff; padding:60px 20px;">
+            <i class="fas fa-video-slash" style="font-size:3rem; opacity:0.5; margin-bottom:15px; display:block;"></i>
+            <p style="font-size:1.1rem;">لا توجد فيديوهات حالياً</p>
+        </div>
+        <?php endif; ?>
     </div>
     </section>
     <section class="about-premium" id="about">

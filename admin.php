@@ -344,12 +344,13 @@ $totalProducts = count($products);
                 <span>لوحة التحكم</span>
             </div>
         </div>
-        <ul class="nav-list">
-            <li><a href="admin.php" class="active"><i class="fas fa-th-large"></i> المنتجات</a></li>
-            <li><a href="index.php" target="_blank"><i class="fas fa-globe"></i> عرض الموقع</a></li>
-            <li><a href="add_product.php"><i class="fas fa-plus-circle"></i> إضافة منتج</a></li>
-            <li style="margin-top: auto;"><a href="logout.php" class="logout"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</a></li>
-        </ul>
+     <ul class="nav-list">
+    <li><a href="admin.php" class="active"><i class="fas fa-th-large"></i> المنتجات</a></li>
+    <li><a href="admin_videos.php"><i class="fas fa-video"></i> الفيديوهات</a></li>
+    <li><a href="index.php" target="_blank"><i class="fas fa-globe"></i> عرض الموقع</a></li>
+    <li><a href="add_product.php"><i class="fas fa-plus-circle"></i> إضافة منتج</a></li>
+    <li style="margin-top: auto;"><a href="logout.php" class="logout"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</a></li>
+</ul>
     </aside>
 
     <main class="main">
